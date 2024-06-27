@@ -5,8 +5,8 @@ namespace WebStore.Core.Tests.Models
 {
     public class UserTest
     {
-        [Fact]
-        public void Create_User_With_Sucess()
+        [Fact(DisplayName = "Create User With Success")]
+        public void Create_User_With_Success()
         {
             //Arrange
             string? Name = "First";
@@ -33,7 +33,7 @@ namespace WebStore.Core.Tests.Models
                 { "First", "email",  null,     true },
             };
 
-        [Theory, MemberData(nameof(Cases))]
+        [Theory(DisplayName = "Test Model User With Success"), MemberData(nameof(Cases))]
         public void Test_Model_User_With_Sucess(string Name, string? email, string? password, bool isValid)
         {
             //Arrange

@@ -7,7 +7,7 @@ namespace WebStore.Identity.API.Tests.Services
 {
     public class CustomerServiceTest
     {
-        [Fact]
+        [Fact(DisplayName = "Create Customer With Sucess")]
         public void Create_Customer_With_Sucess()
         {
             //Arrange
@@ -29,7 +29,7 @@ namespace WebStore.Identity.API.Tests.Services
             Assert.Equal(result.IsCompleted, true);
         }
 
-        [Fact]
+        [Fact(DisplayName = "Update Customer With Sucess")]
         public void Update_Customer_With_Sucess()
         {
             //Arrange
@@ -51,7 +51,7 @@ namespace WebStore.Identity.API.Tests.Services
             Assert.Equal(result.IsCompleted, true);
         }
 
-        [Fact]
+        [Fact(DisplayName = "Remove Customer With Sucess")]
         public void Remove_Customer_With_Sucess()
         {
             //Arrange

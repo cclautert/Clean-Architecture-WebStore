@@ -6,7 +6,7 @@ namespace WebStore.Infrastructure.Tests.Repository
 {
     public class ProductRepositoryTest
     {
-        [Fact]
+        [Fact(DisplayName = "Should Create Product When Command Valid ")]
         public async Task Should_Create_Product_When_Command_Valid()
         {
             //Arrange
@@ -26,7 +26,7 @@ namespace WebStore.Infrastructure.Tests.Repository
             Assert.Equal(result.IsCompleted, true);
         }
 
-        [Fact]
+        [Fact(DisplayName = "Should Update Product When Command Valid ")]
         public async Task Should_Update_Product_When_Command_Valid()
         {
             //Arrange
@@ -46,7 +46,7 @@ namespace WebStore.Infrastructure.Tests.Repository
             Assert.Equal(result.IsCompleted, true);
         }
 
-        [Fact]
+        [Fact(DisplayName = "Should Remove Product When Command Valid ")]
         public void Remove_Product_With_Sucess()
         {
             //Arrange
@@ -61,7 +61,7 @@ namespace WebStore.Infrastructure.Tests.Repository
             Assert.Equal(result.IsCompleted, true);
         }
 
-        [Fact]
+        [Fact(DisplayName = "Should GetById Product When Command Valid ")]
         public void GetById_Product_With_Sucess()
         {
             //Arrange
@@ -76,7 +76,7 @@ namespace WebStore.Infrastructure.Tests.Repository
             Assert.Equal(result.IsCompleted, true);
         }
 
-        [Fact]
+        [Fact(DisplayName = "Should GetAll Product When Command Valid ")]
         public void GetAll_Product_With_Sucess()
         {
             //Arrange

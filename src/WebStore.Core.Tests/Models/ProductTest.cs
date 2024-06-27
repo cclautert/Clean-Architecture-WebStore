@@ -5,7 +5,7 @@ namespace WebStore.Core.Tests.Models
 {
     public class ProductTest
     {
-        [Fact]
+        [Fact(DisplayName = "Create Product With Success")]
         public void Create_Product_With_Sucess()
         {
             //Arrange
@@ -35,7 +35,7 @@ namespace WebStore.Core.Tests.Models
                 { "Name", "Description", 0, new DateTime(2017, 3, 1), true }
             };
 
-        [Theory, MemberData(nameof(Cases))]
+        [Theory(DisplayName = "Test Model Product With Success"), MemberData(nameof(Cases))]
         public void Test_Model_Product_With_Sucess(string? name, string? description, decimal value, DateTime dateRegister, bool isValid)
         {
             //Arrange

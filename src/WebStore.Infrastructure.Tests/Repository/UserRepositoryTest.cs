@@ -6,7 +6,7 @@ namespace WebStore.Infrastructure.Tests.Repository
 {
     public class UserRepositoryTest
     {
-        [Fact]
+        [Fact(DisplayName = "Should Create User When Command Valid")]
         public async Task Should_Create_User_When_Command_Valid()
         {
             //Arrange
@@ -24,7 +24,7 @@ namespace WebStore.Infrastructure.Tests.Repository
             Assert.Equal(result.IsCompleted, true);
         }
 
-        [Fact]
+        [Fact(DisplayName = "Should Update User When Command Valid")]
         public async Task Should_Update_User_When_Command_Valid()
         {
             //Arrange
@@ -42,7 +42,7 @@ namespace WebStore.Infrastructure.Tests.Repository
             Assert.Equal(result.IsCompleted, true);
         }
 
-        [Fact]
+        [Fact(DisplayName = "Should Remove User When Command Valid")]
         public void Remove_User_With_Sucess()
         {
             //Arrange
@@ -57,7 +57,7 @@ namespace WebStore.Infrastructure.Tests.Repository
             Assert.Equal(result.IsCompleted, true);
         }
 
-        [Fact]
+        [Fact(DisplayName = "Should GetById User When Command Valid")]
         public void GetById_User_With_Sucess()
         {
             //Arrange
@@ -71,7 +71,7 @@ namespace WebStore.Infrastructure.Tests.Repository
             Assert.NotNull(result);
             Assert.Equal(result.IsCompleted, true);
         }
-        [Fact]
+        [Fact(DisplayName = "Should GetAll User When Command Valid")]
         public void GetAll_User_With_Sucess()
         {
             //Arrange

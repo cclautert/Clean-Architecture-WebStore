@@ -6,7 +6,7 @@ namespace WebStore.Infrastructure.Tests.Repository
 {
     public class CustomerRepositoryTest
     {
-        [Fact]
+        [Fact(DisplayName = "Should Create Customer When Command Valid")]
         public async Task Should_Create_Customer_When_Command_Valid()
         {
             //Arrange
@@ -25,7 +25,7 @@ namespace WebStore.Infrastructure.Tests.Repository
             Assert.Equal(result.IsCompleted, true);
         }
 
-        [Fact]
+        [Fact(DisplayName = "Should Update Customer When Command Valid")]
         public async Task Should_Update_Customer_When_Command_Valid()
         {
             //Arrange
@@ -44,7 +44,7 @@ namespace WebStore.Infrastructure.Tests.Repository
             Assert.Equal(result.IsCompleted, true);
         }
 
-        [Fact]
+        [Fact(DisplayName = "Should Remove Customer When Command Valid")]
         public void Remove_Customer_With_Sucess()
         {
             //Arrange
@@ -59,7 +59,7 @@ namespace WebStore.Infrastructure.Tests.Repository
             Assert.Equal(result.IsCompleted, true);
         }
 
-        [Fact]
+        [Fact(DisplayName = "Should GetById Customer When Command Valid")]
         public void GetById_Customer_With_Sucess()
         {
             //Arrange
@@ -74,7 +74,7 @@ namespace WebStore.Infrastructure.Tests.Repository
             Assert.Equal(result.IsCompleted, true);
         }
 
-        [Fact]
+        [Fact(DisplayName = "Should GetAll Customer When Command Valid")]
         public void GetAll_Customer_With_Sucess()
         {
             //Arrange

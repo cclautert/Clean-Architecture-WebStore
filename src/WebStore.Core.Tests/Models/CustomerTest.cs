@@ -5,7 +5,7 @@ namespace WebStore.Core.Tests.Models
 {
     public class CustomerTest
     {
-        [Fact]
+        [Fact(DisplayName = "Create Customer With Success")]
         public void Create_Customer_With_Sucess()
         {
             //Arrange
@@ -35,7 +35,7 @@ namespace WebStore.Core.Tests.Models
                 { "First", "Last", "email", null, true },
             };
 
-        [Theory, MemberData(nameof(Cases))]
+        [Theory(DisplayName = "Test Model Customer With Success"), MemberData(nameof(Cases))]
         public void Test_Model_Customer_With_Sucess(string fisrtName, string lastName, string? email, string? address, bool isValid)
         {
             //Arrange
