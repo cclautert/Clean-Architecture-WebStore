@@ -1,13 +1,13 @@
 ﻿
-namespace WebStore.Core.Entities
+namespace WebStore.Domain.Entities
 {
-    public class User : Entity
+    public sealed class User : Entity
     {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordHSalt { get; set; }
+        public string Name { get; private set; }
+        public string Email { get; private set; }
+        public string Password { get; private set; }
+        public byte[] PasswordHash { get; private set; }
+        public byte[] PasswordHSalt { get; private set; }
 
         public User()
         {
@@ -24,6 +24,15 @@ namespace WebStore.Core.Entities
             Name = name;
             Email = email;
             Password = password;
+            PasswordHash = passwordHash;
+            PasswordHSalt = passwordHSalt;
+        }
+
+        public User(Guid id, string name, string email, byte[] passwordHash, byte[] passwordHSalt)
+        {
+            Id = id;
+            Name = name;
+            Email = email;
             PasswordHash = passwordHash;
             PasswordHSalt = passwordHSalt;
         }

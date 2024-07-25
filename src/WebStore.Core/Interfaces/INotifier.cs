@@ -1,6 +1,6 @@
-﻿using WebStore.Core.Notifications;
+﻿using WebStore.Domain.Notifications;
 
-namespace WebStore.Core.Interfaces
+namespace WebStore.Domain.Interfaces
 {
     public interface INotifier
     {

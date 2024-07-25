@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35004.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.Core", "src\WebStore.Core\WebStore.Core.csproj", "{A370E669-838A-489D-9F2A-92E066AD9D2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.Domain", "src\WebStore.Core\WebStore.Domain.csproj", "{A370E669-838A-489D-9F2A-92E066AD9D2F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.Infrastructure", "src\WebStore.Infrastructure\WebStore.Infrastructure.csproj", "{6EB73C34-025A-4176-B63C-50F12F6C2B98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.Infra.Data", "src\WebStore.Infrastructure\WebStore.Infra.Data.csproj", "{6EB73C34-025A-4176-B63C-50F12F6C2B98}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{9257F835-CE09-4AA7-9276-F57721BC1D76}"
 EndProject
@@ -17,13 +17,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.Products.API", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.Product.Application", "src\services\WebStore.Product.Application\WebStore.Product.Application.csproj", "{CCDFD85F-A543-4B9F-BFEB-01E4AAA6D4F9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.Core.Tests", "src\WebStore.Core.Tests\WebStore.Core.Tests.csproj", "{F9C55D58-D007-4348-BFD3-09B87E955CCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.Domain.Tests", "src\WebStore.Core.Tests\WebStore.Domain.Tests.csproj", "{F9C55D58-D007-4348-BFD3-09B87E955CCA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.Infrastructure.Tests", "src\WebStore.Infrastructure.Tests\WebStore.Infrastructure.Tests.csproj", "{99BC2255-5BD8-409B-94B0-6AC4E0F3ED4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.Infra.Data.Tests", "src\WebStore.Infrastructure.Tests\WebStore.Infra.Data.Tests.csproj", "{99BC2255-5BD8-409B-94B0-6AC4E0F3ED4A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.Identity.API.Tests", "src\services\WebStore.Identity.API.Tests\WebStore.Identity.API.Tests.csproj", "{BECBE0EE-7F49-4EA7-85A7-5BA5338EDD44}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.Product.API.Tests", "src\services\WebStore.Product.API.Tests\WebStore.Product.API.Tests.csproj", "{86884066-963A-441F-8FCE-FAEDA8E67B0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStore.Infra.IoC", "src\WebStore.Infra.IoC\WebStore.Infra.IoC.csproj", "{E5E36BBB-468B-471B-8453-F274EEFF115F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,10 @@ Global
 		{86884066-963A-441F-8FCE-FAEDA8E67B0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86884066-963A-441F-8FCE-FAEDA8E67B0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86884066-963A-441F-8FCE-FAEDA8E67B0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5E36BBB-468B-471B-8453-F274EEFF115F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5E36BBB-468B-471B-8453-F274EEFF115F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5E36BBB-468B-471B-8453-F274EEFF115F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5E36BBB-468B-471B-8453-F274EEFF115F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

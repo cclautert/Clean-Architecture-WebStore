@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
-using WebStore.Core.Entities;
-using WebStore.Core.Interfaces;
-using WebStore.Core.Notifications;
+using WebStore.Domain.Entities;
+using WebStore.Domain.Interfaces;
+using WebStore.Domain.Notifications;
 
-namespace WebStore.Identity.Application.Services
+namespace WebStore.Domain.Services
 {
     public abstract class BaseService
     {

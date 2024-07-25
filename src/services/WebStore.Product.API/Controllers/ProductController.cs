@@ -2,7 +2,9 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebStore.Core.Interfaces;
+using WebStore.Domain.Interfaces;
+using WebStore.Product.Application.DTOs;
+using WebStore.Product.Application.Interfaces;
 using WebStore.Product.Application.ViewModels;
 
 namespace WebStore.Products.API.Controllers
@@ -10,28 +12,25 @@ namespace WebStore.Products.API.Controllers
     [Route("api/products")]
     public class ProductController : MainController
     {
-        private readonly IProductRepository _productRepository;
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
 
-        public ProductController(IProductRepository productRepository,
-                                 IProductService productService,
+        public ProductController(IProductService productService,
                                  IMapper mapper,
                                  INotifier notificator) : base(notificator)
         {
-            _productRepository = productRepository;
             _productService = productService;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ProductIdViewModel>> GetAll()
+        public async Task<IEnumerable<ProductDTO>> GetAll()
         {
-            return _mapper.Map<IEnumerable<ProductIdViewModel>>(await _productRepository.GetAllAsync());                               
+            return _mapper.Map<IEnumerable<ProductDTO>>(await _productService.GetAllAsync());                               
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<ActionResult<ProductViewModel>> GetById(Guid id)
+        public async Task<ActionResult<ProductDTO>> GetById(Guid id)
         {
             var productViewModel = await GetProductById(id);
 
@@ -42,18 +41,18 @@ namespace WebStore.Products.API.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<ProductViewModel>> Create(ProductViewModel produtoViewModel)
+        public async Task<ActionResult<ProductViewModel>> Create(ProductDTO produtoViewModel)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await _productService.CreateAsync(_mapper.Map<Core.Entities.Product>(produtoViewModel));
+            await _productService.CreateAsync(_mapper.Map<ProductDTO>(produtoViewModel));
 
             return CustomResponse(HttpStatusCode.Created ,produtoViewModel);
         }
 
         [HttpPut("{id:guid}")]
         [Authorize]
-        public async Task<IActionResult> Update(Guid id, ProductViewModel produtoViewModel)
+        public async Task<IActionResult> Update(Guid id, ProductDTO produtoViewModel)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
@@ -62,9 +61,9 @@ namespace WebStore.Products.API.Controllers
             productUpdated.Name = produtoViewModel.Name;
             productUpdated.Description = produtoViewModel.Description;
             productUpdated.Value = produtoViewModel.Value;
-            productUpdated.DateRegister = produtoViewModel.DateRegister;
+            //productUpdated.DateRegister = produtoViewModel.DateRegister;
 
-            await _productService.UpdateAsync(_mapper.Map<Core.Entities.Product>(productUpdated));
+            await _productService.UpdateAsync(_mapper.Map<ProductDTO>(productUpdated));
 
             return CustomResponse(HttpStatusCode.NoContent);
         }
@@ -82,9 +81,9 @@ namespace WebStore.Products.API.Controllers
             return CustomResponse(HttpStatusCode.NoContent);
         }
 
-        private async Task<ProductViewModel> GetProductById(Guid id)
+        private async Task<ProductDTO> GetProductById(Guid id)
         {
-            return _mapper.Map<ProductViewModel>(await _productRepository.GetByIdAsync(id));
+            return _mapper.Map<ProductDTO>(await _productService.GetProductByIdAsync(id));
         }
     }
 }

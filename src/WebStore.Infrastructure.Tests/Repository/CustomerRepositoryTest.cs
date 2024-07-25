@@ -1,8 +1,8 @@
 using Moq;
-using WebStore.Core.Entities;
-using WebStore.Core.Interfaces;
+using WebStore.Domain.Entities;
+using WebStore.Domain.Interfaces;
 
-namespace WebStore.Infrastructure.Tests.Repository
+namespace WebStore.Infra.Data.Tests.Repository
 {
     public class CustomerRepositoryTest
     {

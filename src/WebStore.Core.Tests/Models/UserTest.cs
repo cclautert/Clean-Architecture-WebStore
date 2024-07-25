@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using WebStore.Core.Entities;
+using WebStore.Domain.Entities;
 
-namespace WebStore.Core.Tests.Models
+namespace WebStore.Domain.Tests.Models
 {
     public class UserTest
     {

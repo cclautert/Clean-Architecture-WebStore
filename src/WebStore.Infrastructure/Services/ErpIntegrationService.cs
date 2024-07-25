@@ -1,6 +1,6 @@
-﻿using WebStore.Core.Interfaces;
+﻿using WebStore.Domain.Interfaces;
 
-namespace WebStore.Infrastructure.Services
+namespace WebStore.Infra.Data.Services
 {
     internal class ErpIntegrationService: IErpIntegrationService
     {

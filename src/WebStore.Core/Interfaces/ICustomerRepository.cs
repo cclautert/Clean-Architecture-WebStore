@@ -1,6 +1,6 @@
-﻿using WebStore.Core.Entities;
+﻿using WebStore.Domain.Entities;
 
-namespace WebStore.Core.Interfaces
+namespace WebStore.Domain.Interfaces
 {
     public interface ICustomerRepository : IRepository<Customer>
     {

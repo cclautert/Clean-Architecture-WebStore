@@ -2,10 +2,10 @@
 using System.Linq.Expressions;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using WebStore.Core.Entities;
-using WebStore.Core.Interfaces;
+using WebStore.Domain.Entities;
+using WebStore.Domain.Interfaces;
 
-namespace WebStore.Infrastructure.Repository
+namespace WebStore.Infra.Data.Repository
 {
     public class CustomerRepository : ICustomerRepository
     {
@@ -83,7 +83,7 @@ namespace WebStore.Infrastructure.Repository
 
         public async Task<Customer> GetByIdAsync(Guid id)
         {
-            Customer customer = new Customer();
+            Customer customer = null;
 
             await using SqlConnection con = GetConnection();
             string sqlQuery = $"SELECT * FROM Customer WHERE Id='{id}' ";
@@ -93,18 +93,15 @@ namespace WebStore.Infrastructure.Repository
   
             while (rdr.Read())  
             {  
-                customer.Id = Guid.Parse(rdr["Id"].ToString());  
-                customer.FirstName = rdr["FirstName"].ToString();  
-                customer.LastName = rdr["LastName"].ToString();  
-                customer.Email = rdr["Email"].ToString();
-                customer.Address = rdr["Address"].ToString();  
+                customer = new Customer(Guid.Parse(rdr["Id"].ToString()), rdr["FirstName"].ToString(), rdr["LastName"].ToString(), rdr["Email"].ToString(), rdr["Address"].ToString());
             }
 
             return customer;
         }
         public async Task<List<Customer>> GetAllAsync()
         {
-            List<Customer> lstSupplier = new List<Customer>();
+            Customer customer = null;
+            List<Customer> lstCustomer = new List<Customer>();
             await using SqlConnection con = GetConnection();
             SqlCommand cmd = new SqlCommand(StoredProcedures.GetAllCustomer, con);  
             cmd.CommandType = CommandType.StoredProcedure;  
@@ -113,17 +110,12 @@ namespace WebStore.Infrastructure.Repository
   
             while (rdr.Read())  
             {  
-                Customer supplier = new Customer();
-                supplier.Id = Guid.Parse(rdr["Id"].ToString());
-                supplier.FirstName = rdr["FirstName"].ToString();  
-                supplier.LastName = rdr["LastName"].ToString();  
-                supplier.Email = rdr["Email"].ToString();  
-                supplier.Address = rdr["Address"].ToString();  
+                customer = new Customer(Guid.Parse(rdr["Id"].ToString()), rdr["FirstName"].ToString(), rdr["LastName"].ToString(), rdr["Email"].ToString(), rdr["Address"].ToString());
   
-                lstSupplier.Add(supplier);  
+                lstCustomer.Add(customer);  
             }  
             con.Close();
-            return lstSupplier;  
+            return lstCustomer;  
         }
 
         public async Task RemoveAsync(Guid id)

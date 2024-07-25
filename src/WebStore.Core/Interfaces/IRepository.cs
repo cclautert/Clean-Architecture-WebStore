@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace WebStore.Core.Interfaces
+namespace WebStore.Domain.Interfaces
 {
     public interface IRepository<TEntity>
     {

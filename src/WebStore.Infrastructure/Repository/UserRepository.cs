@@ -6,11 +6,11 @@ using System.Text;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using WebStore.Core.Entities;
-using WebStore.Core.Interfaces;
+using WebStore.Domain.Entities;
+using WebStore.Domain.Interfaces;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
-namespace WebStore.Infrastructure.Repository
+namespace WebStore.Infra.Data.Repository
 {
     public class UserRepository : IUserRepository
     {
@@ -111,7 +111,7 @@ namespace WebStore.Infrastructure.Repository
 
         public async Task<User> FindByEmailAsync(string email)
         {
-            User user = new User();
+            User user = null;
 
             await using SqlConnection con = GetConnection();
             string sqlQuery = $"SELECT * FROM User_Authentication WHERE Email='{email}' ";
@@ -120,12 +120,8 @@ namespace WebStore.Infrastructure.Repository
             SqlDataReader rdr = await cmd.ExecuteReaderAsync();  
   
             while (rdr.Read())  
-            {  
-                user.Id = Guid.Parse(rdr["Id"].ToString());  
-                user.Name = rdr["Name"].ToString();
-                user.Email = rdr["Email"].ToString();
-                user.PasswordHash = (byte[])rdr["PasswordHash"];
-                user.PasswordHSalt = (byte[])rdr["PasswordSalt"];
+            { 
+                user = new User(Guid.Parse(rdr["Id"].ToString()), rdr["Name"].ToString(), rdr["Email"].ToString(), (byte[])rdr["PasswordHash"], (byte[])rdr["PasswordSalt"]);
             }
 
             return user;
@@ -164,6 +160,7 @@ namespace WebStore.Infrastructure.Repository
 
         public async Task<List<User>> GetAllAsync()
         {
+            User user = null;
             List<User> lstUser = new List<User>();
             await using SqlConnection con = GetConnection();
             SqlCommand cmd = new SqlCommand(StoredProcedures.GetAllUser, con);  
@@ -172,14 +169,9 @@ namespace WebStore.Infrastructure.Repository
             SqlDataReader rdr = await cmd.ExecuteReaderAsync();  
   
             while (rdr.Read())  
-            {  
-                User user = new User();
-                user.Id = Guid.Parse(rdr["Id"].ToString());
-                user.Name = rdr["Name"].ToString();
-                user.Email = rdr["Email"].ToString();  
-                user.PasswordHash = (byte[])rdr["PasswordHash"];
-                user.PasswordHSalt = (byte[])rdr["PasswordSalt"];
-  
+            {
+                user = new User(Guid.Parse(rdr["Id"].ToString()), rdr["Name"].ToString(), rdr["Email"].ToString(), (byte[])rdr["PasswordHash"], (byte[])rdr["PasswordSalt"]);
+                
                 lstUser.Add(user);  
             }  
             con.Close();

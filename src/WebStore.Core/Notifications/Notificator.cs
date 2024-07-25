@@ -1,6 +1,6 @@
-﻿using WebStore.Core.Interfaces;
+﻿using WebStore.Domain.Interfaces;
 
-namespace WebStore.Core.Notifications
+namespace WebStore.Domain.Notifications
 {
     public class Notificator : INotifier
     {

@@ -1,24 +1,33 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using WebStore.Core.Interfaces;
-using WebStore.Core.Notifications;
+using WebStore.Domain.Interfaces;
+using WebStore.Domain.Notifications;
+using WebStore.Identity.Application.Interfaces;
 using WebStore.Identity.Application.Services;
-using WebStore.Infrastructure.Repository;
+using WebStore.Infra.Data.Repository;
+using WebStore.Product.Application.Interfaces;
+using WebStore.Product.Application.Services;
 
-namespace WebStore.Identity.API.Configurations
+namespace WebStore.Infra.IoC
 {
-    public static class DependencyInjectionConfig
+    public static class DependencyInjection
     {
         public static IServiceCollection ResolveDependencies(this IServiceCollection services)
         {
-            // Data
+            // Repository
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
 
-            // Business
+            // Services
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<INotifier, Notificator>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<INotifier, Notificator>();
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddAuthentication(opt =>
             {

@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using WebStore.Core.Interfaces;
-using WebStore.Core.Notifications;
+using WebStore.Domain.Interfaces;
+using WebStore.Domain.Notifications;
 
 namespace WebStore.Products.API.Controllers
 {

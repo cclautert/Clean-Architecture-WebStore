@@ -1,8 +1,6 @@
-﻿using WebStore.Core.Entities;
-
-namespace WebStore.Core.Interfaces
+﻿namespace WebStore.Domain.Interfaces
 {
-    public interface IProductRepository : IRepository<Product>
+    public interface IProductRepository : IRepository<Domain.Entities.Product>
     {
         
     }

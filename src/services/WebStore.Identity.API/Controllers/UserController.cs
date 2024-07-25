@@ -1,8 +1,8 @@
-﻿using System.Net;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using WebStore.Core.Entities;
-using WebStore.Core.Interfaces;
+using WebStore.Domain.Interfaces;
+using WebStore.Identity.Application.DTOs;
+using WebStore.Identity.Application.Interfaces;
 using WebStore.Identity.Application.ViewModels;
 
 namespace WebStore.Identity.API.Controllers
@@ -11,38 +11,35 @@ namespace WebStore.Identity.API.Controllers
     public class UserController : MainController
     {
         private readonly IMapper _mapper;
-        private readonly IUserRepository _userRepository;
         private readonly IUserService _userService;
 
         public UserController(IMapper mapper,
-                                  IUserRepository userRepository,
                                   IUserService userService,
                                   INotifier notificator) : base(notificator)
         {
             _mapper = mapper;
-            _userRepository = userRepository;
             _userService = userService;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<UserViewModel>> GetAll()
+        public async Task<IEnumerable<UserDTO>> GetAll()
         {
-            return _mapper.Map<IEnumerable<UserViewModel>>(await _userRepository.GetAllAsync());
+            return await _userService.GetAllAsync();
         }
 
         [HttpPost("Register")]
-        public async Task<ActionResult<UserToken>> Register(UserViewModel userViewModel)
+        public async Task<ActionResult<UserToken>> Register(UserDTO userViewModel)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            var usuario = await _userRepository.FindByEmailAsync(userViewModel.Email);
+            var usuario = await _userService.FindByEmailAsync(userViewModel.Email);
             if (usuario?.Email != null)
             {
                 NotifyError("email exists!");
                 return CustomResponse();
             }
 
-            await _userService.CreateAsync(_mapper.Map<User>(userViewModel));
+            await _userService.CreateAsync(_mapper.Map<UserDTO>(userViewModel));
 
             var authToken =  _userService.GenerateToken(userViewModel.Email, userViewModel.Password);
 

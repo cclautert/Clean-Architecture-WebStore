@@ -1,23 +1,43 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
-using WebStore.Core.Entities;
-using WebStore.Core.Entities.Validations;
-using WebStore.Core.Interfaces;
+using AutoMapper;
+using WebStore.Domain.Entities;
+using WebStore.Domain.Entities.Validations;
+using WebStore.Domain.Interfaces;
+using WebStore.Domain.Services;
+using WebStore.Identity.Application.DTOs;
+using WebStore.Identity.Application.Interfaces;
+using WebStore.Identity.Application.ViewModels;
 
 namespace WebStore.Identity.Application.Services
 {
     public class UserService : BaseService, IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
 
         public UserService(IUserRepository userepository, 
-                           INotifier notificador) : base(notificador)
+                           INotifier notificador,
+                           IMapper mapper) : base(notificador)
         {
             _userRepository = userepository;
+            _mapper = mapper;
         }
 
-        public async Task CreateAsync(User user)
+        public async Task<IEnumerable<UserDTO>> GetAllAsync()
         {
+            return _mapper.Map<IEnumerable<UserDTO>>(await _userRepository.GetAllAsync());
+        }
+
+        public async Task<UserDTO> FindByEmailAsync(string email)
+        {
+            return _mapper.Map<UserDTO>(await _userRepository.FindByEmailAsync(email));
+        }
+
+        public async Task CreateAsync(UserDTO userDto)
+        {
+            var user = _mapper.Map<User>(userDto);
+
             if (!RunValidation(new UserValidation(), user)) return;
 
             if (user.Password != null)
@@ -32,8 +52,10 @@ namespace WebStore.Identity.Application.Services
             await _userRepository.CreateAsync(user);
         }
 
-        public async Task UpdateAsync(User user)
+        public async Task UpdateAsync(UserDTO userDto)
         {
+            var user = _mapper.Map<User>(userDto);
+
             if (!RunValidation(new UserValidation(), user)) return;
 
             if (user.Password != null)

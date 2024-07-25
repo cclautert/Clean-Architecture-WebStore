@@ -1,3 +1,4 @@
+using WebStore.Infra.IoC;
 using WebStore.Products.API.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace WebStore.Core.Entities.Validations
+namespace WebStore.Domain.Entities.Validations
 {
     public class CustomerValidation : AbstractValidator<Customer>
     {

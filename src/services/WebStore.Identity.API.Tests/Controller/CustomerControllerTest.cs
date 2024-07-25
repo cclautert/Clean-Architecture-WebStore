@@ -1,9 +1,11 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using WebStore.Core.Entities;
-using WebStore.Core.Interfaces;
+using WebStore.Domain.Entities;
+using WebStore.Domain.Interfaces;
 using WebStore.Identity.API.Controllers;
+using WebStore.Identity.Application.DTOs;
+using WebStore.Identity.Application.Interfaces;
 using WebStore.Identity.Application.ViewModels;
 
 namespace WebStore.Identity.API.Tests.Controller
@@ -14,14 +16,13 @@ namespace WebStore.Identity.API.Tests.Controller
         public void TeamController_Search_Get_Valid()
         {
             // Arrange
-            var mockRepo = new Mock<ICustomerRepository>();
             var mockService = new Mock<ICustomerService>();
             var mockMapper = new Mock<IMapper>();
             var mockNotifier = new Mock<INotifier>();
-            var controller = new CustomerController(mockMapper.Object, mockRepo.Object, mockService.Object, mockNotifier.Object);
+            var controller = new CustomerController(mockMapper.Object, mockService.Object, mockNotifier.Object);
 
             // Act
-            var result = controller.GetAll() as Task<IEnumerable<CustomerIdViewModel>>;
+            var result = controller.GetAll() as Task<IEnumerable<CustomerDTO>>;
 
             // Assert
             Assert.NotNull(result);
@@ -38,10 +39,10 @@ namespace WebStore.Identity.API.Tests.Controller
             var mockService = new Mock<ICustomerService>();
             var mockMapper = new Mock<IMapper>();
             var mockNotifier = new Mock<INotifier>();
-            var controller = new CustomerController(mockMapper.Object, mockRepo.Object, mockService.Object, mockNotifier.Object);
+            var controller = new CustomerController(mockMapper.Object, mockService.Object, mockNotifier.Object);
 
             // Act
-            var result = await controller.Create(new CustomerViewModel());
+            var result = await controller.Create(new CustomerDTO());
 
             // Assert
             Assert.IsType<ActionResult<CustomerViewModel>>(result);
@@ -51,14 +52,13 @@ namespace WebStore.Identity.API.Tests.Controller
         public void Index_Returns_ViewResult_WithAListOfBrainstormSessions()
         {
             // Arrange
-            var mockRepo = new Mock<ICustomerRepository>();
             var mockService = new Mock<ICustomerService>();
             var mockMapper = new Mock<IMapper>();
             var mockNotifier = new Mock<INotifier>();
-            var controller = new CustomerController(mockMapper.Object, mockRepo.Object, mockService.Object, mockNotifier.Object);
+            var controller = new CustomerController(mockMapper.Object, mockService.Object, mockNotifier.Object);
 
             // Act
-            var result = controller.GetAll() as Task<IEnumerable<CustomerIdViewModel>>;
+            var result = controller.GetAll() as Task<IEnumerable<CustomerDTO>>;
 
             // Assert
             Assert.NotNull(result);
@@ -68,39 +68,24 @@ namespace WebStore.Identity.API.Tests.Controller
         public void Index_ReturnsAViewResult_WithAListOfBrainstormSessions()
         {
             // Arrange
-            var mockRepo = new Mock<ICustomerRepository>();
             var mockService = new Mock<ICustomerService>();
             var mockMapper = new Mock<IMapper>();
             var mockNotifier = new Mock<INotifier>();
-            var controller = new CustomerController(mockMapper.Object, mockRepo.Object, mockService.Object, mockNotifier.Object);
+            var controller = new CustomerController(mockMapper.Object, mockService.Object, mockNotifier.Object);
             
             // Act
             var result = controller.GetAll();
 
             // Assert
-            var viewResult = Assert.IsType<Task<IEnumerable<CustomerIdViewModel>>>(result);
+            var viewResult = Assert.IsType<Task<IEnumerable<CustomerDTO>>>(result);
             Assert.Equal(0, viewResult.Result.Count());
         }
 
         private List<Customer> GetTestSessions()
         {
             var lstCustomer = new List<Customer>();
-            lstCustomer.Add(new Customer()
-            {
-                Id = new Guid(),
-                FirstName = "Test One",
-                LastName = "Test One",
-                Email = "Test One",
-                Address = "Test One",
-            });
-            lstCustomer.Add(new Customer()
-            {
-                Id = new Guid(),
-                FirstName = "Test two",
-                LastName = "Test two",
-                Email = "Test two",
-                Address = "Test two",
-            });
+            lstCustomer.Add(new Customer(new Guid(), "Test one", "Test one", "Test one", "Test one"));
+            lstCustomer.Add(new Customer(new Guid(), "Test two", "Test two", "Test two", "Test two"));
             return lstCustomer;
         }
     }

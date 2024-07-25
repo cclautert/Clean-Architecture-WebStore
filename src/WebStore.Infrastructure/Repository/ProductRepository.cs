@@ -2,10 +2,10 @@
 using System.Linq.Expressions;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using WebStore.Core.Entities;
-using WebStore.Core.Interfaces;
+using WebStore.Domain.Entities;
+using WebStore.Domain.Interfaces;
 
-namespace WebStore.Infrastructure.Repository
+namespace WebStore.Infra.Data.Repository
 {
     public class ProductRepository : IProductRepository
     {
@@ -59,8 +59,7 @@ namespace WebStore.Infrastructure.Repository
 
         public async Task<Product> GetByIdAsync(Guid id)
         {
-            Product product = new Product();
-
+            Product product = null;
             await using SqlConnection con = GetConnection();
             string sqlQuery = $"SELECT * FROM Product WHERE Id='{id}' ";  //Needs to change because security
             SqlCommand cmd = new SqlCommand(sqlQuery, con);  
@@ -68,12 +67,8 @@ namespace WebStore.Infrastructure.Repository
             SqlDataReader rdr = await cmd.ExecuteReaderAsync();  
   
             while (rdr.Read())  
-            {  
-                product.Id = Guid.Parse(rdr["Id"].ToString());  
-                product.Name = rdr["Name"].ToString();  
-                product.Description = rdr["Description"].ToString();  
-                product.Value = Decimal.Parse(rdr["Value"].ToString());  
-                product.DateRegister = DateTime.Parse(rdr["DateRegister"].ToString()); 
+            {
+                product = new Product(Guid.Parse(rdr["Id"].ToString()), rdr["Name"].ToString(), rdr["Description"].ToString(), Decimal.Parse(rdr["Value"].ToString()), DateTime.Parse(rdr["DateRegister"].ToString()));
             }
 
             return product;
@@ -81,6 +76,7 @@ namespace WebStore.Infrastructure.Repository
 
         public async Task<List<Product>> GetAllAsync()
         {
+            Product product = null;
             List<Product> lstProduct = new List<Product>();
             await using SqlConnection con = GetConnection();
             SqlCommand cmd = new SqlCommand("spGetAllProducts", con);  
@@ -90,12 +86,7 @@ namespace WebStore.Infrastructure.Repository
   
             while (rdr.Read())  
             {  
-                Product product = new Product();
-                product.Id = Guid.Parse(rdr["Id"].ToString());
-                product.Name = rdr["Name"].ToString();  
-                product.Description = rdr["Description"].ToString();  
-                product.Value = Decimal.Parse(rdr["Value"].ToString());  
-                product.DateRegister = DateTime.Parse(rdr["DateRegister"].ToString());  
+                product = new Product(Guid.Parse(rdr["Id"].ToString()), rdr["Name"].ToString(), rdr["Description"].ToString(), Decimal.Parse(rdr["Value"].ToString()), DateTime.Parse(rdr["DateRegister"].ToString()));
   
                 lstProduct.Add(product);  
             }  

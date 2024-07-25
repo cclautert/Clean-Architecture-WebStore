@@ -2,8 +2,9 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebStore.Core.Entities;
-using WebStore.Core.Interfaces;
+using WebStore.Domain.Interfaces;
+using WebStore.Identity.Application.DTOs;
+using WebStore.Identity.Application.Interfaces;
 using WebStore.Identity.Application.ViewModels;
 
 namespace WebStore.Identity.API.Controllers
@@ -12,53 +13,50 @@ namespace WebStore.Identity.API.Controllers
     public class CustomerController : MainController
     {
         private readonly IMapper _mapper;
-        private readonly ICustomerRepository _customerRepository;
         private readonly ICustomerService _customerService;
 
         public CustomerController(IMapper mapper,
-                                  ICustomerRepository customerRepository,
                                   ICustomerService customerService,
                                   INotifier notificator) : base(notificator)
         {
             _mapper = mapper;
-            _customerRepository = customerRepository;
             _customerService = customerService;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<CustomerIdViewModel>> GetAll()
+        public async Task<IEnumerable<CustomerDTO>> GetAll()
         {
-            return _mapper.Map<IEnumerable<CustomerIdViewModel>>(await _customerRepository.GetAllAsync());
+            return _mapper.Map<IEnumerable<CustomerDTO>>(await _customerService.GetAllAsync());
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<ActionResult<CustomerViewModel>> GetById(Guid id)
+        public async Task<ActionResult<CustomerDTO>> GetById(Guid id)
         {
-            var supplier = await GetCustomerById(id);
+            var customer = await GetCustomerById(id);
 
-            if (supplier == null) return NotFound();
+            if (customer == null) return NotFound();
 
-            return supplier;
+            return customer;
         }
         
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<CustomerViewModel>> Create(CustomerViewModel customerViewModel)
+        public async Task<ActionResult<CustomerViewModel>> Create(CustomerDTO customerViewModel)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await _customerService.CreateAsync(_mapper.Map<Customer>(customerViewModel));
+            await _customerService.CreateAsync(_mapper.Map<CustomerDTO>(customerViewModel));
 
             return CustomResponse(HttpStatusCode.Created, customerViewModel);
         }
 
         [HttpPut("{id:guid}")]
         [Authorize]
-        public async Task<ActionResult<CustomerViewModel>> Update(Guid id, CustomerViewModel customerViewModel)
+        public async Task<ActionResult<CustomerViewModel>> Update(Guid id, CustomerDTO customerViewModel)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await _customerService.UpdateAsync(_mapper.Map<Customer>(customerViewModel));
+            await _customerService.UpdateAsync(_mapper.Map<CustomerDTO>(customerViewModel));
 
             return CustomResponse(HttpStatusCode.NoContent);
         }
@@ -71,9 +69,9 @@ namespace WebStore.Identity.API.Controllers
 
             return CustomResponse(HttpStatusCode.NoContent);
         }
-        private async Task<CustomerViewModel> GetCustomerById(Guid id)
+        private async Task<CustomerDTO> GetCustomerById(Guid id)
         {
-            return _mapper.Map<CustomerViewModel>(await _customerRepository.GetByIdAsync(id));
+            return _mapper.Map<CustomerDTO>(await _customerService.GetCustomerById(id));
         }
     }
 }

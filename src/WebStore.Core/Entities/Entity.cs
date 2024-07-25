@@ -1,5 +1,5 @@
 ﻿
-namespace WebStore.Core.Entities
+namespace WebStore.Domain.Entities
 {
     public abstract class Entity
     {

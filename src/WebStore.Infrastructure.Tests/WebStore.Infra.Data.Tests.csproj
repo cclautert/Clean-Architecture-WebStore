@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WebStore.Core\WebStore.Core.csproj" />
+    <ProjectReference Include="..\WebStore.Infrastructure\WebStore.Infra.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>

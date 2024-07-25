@@ -1,5 +1,5 @@
 ﻿
-namespace WebStore.Core.Notifications
+namespace WebStore.Domain.Notifications
 {
     public class Notification
     {

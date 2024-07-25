@@ -22,8 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\WebStore.Infrastructure\WebStore.Infrastructure.csproj" />
-    <ProjectReference Include="..\WebStore.Identity.Application\WebStore.Identity.Application.csproj" />
+    <ProjectReference Include="..\..\WebStore.Infra.IoC\WebStore.Infra.IoC.csproj" />
   </ItemGroup>
 
 </Project>

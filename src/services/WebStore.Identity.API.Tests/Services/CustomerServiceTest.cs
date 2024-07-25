@@ -1,6 +1,8 @@
+using AutoMapper;
 using Moq;
-using WebStore.Core.Entities;
-using WebStore.Core.Interfaces;
+using WebStore.Domain.Entities;
+using WebStore.Domain.Interfaces;
+using WebStore.Identity.Application.DTOs;
 using WebStore.Identity.Application.Services;
 
 namespace WebStore.Identity.API.Tests.Services
@@ -20,9 +22,11 @@ namespace WebStore.Identity.API.Tests.Services
             var customer = new Customer(firstName, lastName, email, address);
             var customerRepository = new Mock<ICustomerRepository>();
             var notifier = new Mock<INotifier>();
-            CustomerService customerService = new CustomerService(customerRepository.Object, notifier.Object);
+            var mapper = new Mock<IMapper>();
+            CustomerService customerService = new CustomerService(customerRepository.Object, notifier.Object, mapper.Object);
 
-            var result = customerService.CreateAsync(customer);
+            var customerDto = mapper.Object.Map<CustomerDTO>(customer);
+            var result = customerService.CreateAsync(customerDto);
 
             //Assert
             Assert.NotNull(result);
@@ -42,9 +46,11 @@ namespace WebStore.Identity.API.Tests.Services
             var customer = new Customer(firstName, lastName, email, address);
             var customerRepository = new Mock<ICustomerRepository>();
             var notifier = new Mock<INotifier>();
-            CustomerService customerService = new CustomerService(customerRepository.Object, notifier.Object);
+            var mapper = new Mock<IMapper>();
+            CustomerService customerService = new CustomerService(customerRepository.Object, notifier.Object, mapper.Object);
 
-            var result = customerService.UpdateAsync(customer);
+            var customerDto = mapper.Object.Map<CustomerDTO>(customer); 
+            var result = customerService.UpdateAsync(customerDto);
 
             //Assert
             Assert.NotNull(result);
@@ -60,7 +66,8 @@ namespace WebStore.Identity.API.Tests.Services
             //Act
             var customerRepository = new Mock<ICustomerRepository>();
             var notifier = new Mock<INotifier>();
-            CustomerService customerService = new CustomerService(customerRepository.Object, notifier.Object);
+            var mapper = new Mock<IMapper>();
+            CustomerService customerService = new CustomerService(customerRepository.Object, notifier.Object, mapper.Object);
 
             var result = customerService.RemoveAsync(id);
 
