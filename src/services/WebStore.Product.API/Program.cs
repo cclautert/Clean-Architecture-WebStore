@@ -12,7 +12,7 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerConfiguration();
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+//builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.ResolveDependencies();
 

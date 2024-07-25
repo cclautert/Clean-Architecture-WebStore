@@ -29,6 +29,9 @@ namespace WebStore.Infra.IoC
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            //services.AddMediatR(cfg=>cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+            services.AddMediatR(cf => cf.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
+
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

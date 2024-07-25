@@ -1,4 +1,5 @@
 using AutoMapper;
+using MediatR;
 using Moq;
 using WebStore.Domain.Interfaces;
 using WebStore.Product.Application.DTOs;
@@ -20,10 +21,10 @@ namespace WebStore.Product.API.Tests.Services
 
             //Act
             Domain.Entities.Product product = new Domain.Entities.Product(name, description, value, dateRegister);
-            var productRepository = new Mock<IProductRepository>();
             var notifier = new Mock<INotifier>();
             var mapper = new Mock<IMapper>();
-            ProductService productService = new ProductService(productRepository.Object, notifier.Object, mapper.Object);
+            var mediator = new Mock<IMediator>();
+            ProductService productService = new ProductService(notifier.Object, mapper.Object, mediator.Object);
 
             var productDto = mapper.Object.Map<ProductDTO>(product);
             var result = productService.CreateAsync(productDto);
@@ -44,10 +45,10 @@ namespace WebStore.Product.API.Tests.Services
 
             //Act
             Domain.Entities.Product product = new Domain.Entities.Product(name, description, value, dateRegister);
-            var productRepository = new Mock<IProductRepository>();
             var notifier = new Mock<INotifier>();
             var mapper = new Mock<IMapper>();
-            ProductService productService = new ProductService(productRepository.Object, notifier.Object, mapper.Object);
+            var mediator = new Mock<IMediator>();
+            ProductService productService = new ProductService(notifier.Object, mapper.Object, mediator.Object);
 
             var productDto = mapper.Object.Map<ProductDTO>(product);
             var result = productService.UpdateAsync(productDto);
@@ -64,10 +65,10 @@ namespace WebStore.Product.API.Tests.Services
             Guid id = new Guid();
 
             //Act
-            var productRepository = new Mock<IProductRepository>();
             var notifier = new Mock<INotifier>();
             var mapper = new Mock<IMapper>();
-            ProductService productService = new ProductService(productRepository.Object, notifier.Object, mapper.Object);
+            var mediator = new Mock<IMediator>();
+            ProductService productService = new ProductService(notifier.Object, mapper.Object, mediator.Object);
 
             var result = productService.RemoveAsync(id);
 
