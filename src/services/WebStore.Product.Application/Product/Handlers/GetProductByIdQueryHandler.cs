@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using WebStore.Domain.Interfaces;
-using WebStore.Product.Application.Product.Commands;
+using WebStore.Product.Application.Product.Queries;
 
 namespace WebStore.Product.Application.Product.Handlers
 {
-    public class GetProductByIdQueryHandler : IRequestHandler<ProductCreateCommand, Domain.Entities.Product>
+    public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, Domain.Entities.Product>
     {
         private readonly IProductRepository _productRepository;
         public GetProductByIdQueryHandler(IProductRepository productRepository)
@@ -12,7 +12,7 @@ namespace WebStore.Product.Application.Product.Handlers
             _productRepository = productRepository;
         }   
         
-        public async Task<Domain.Entities.Product> Handle(ProductCreateCommand request, CancellationToken cancellationToken)
+        public async Task<Domain.Entities.Product> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
             return await _productRepository.GetByIdAsync(request.Id);
         }

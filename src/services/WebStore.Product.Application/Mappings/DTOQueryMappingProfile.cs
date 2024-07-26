@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using WebStore.Product.Application.DTOs;
-using WebStore.Product.Application.Product.Queries;
 
 namespace WebStore.Product.Application.Mappings
 {
@@ -8,7 +7,8 @@ namespace WebStore.Product.Application.Mappings
     {
         public DTOQueryMappingProfile()
         {
-            CreateMap<GetProductsQuery, IEnumerable<ProductDTO>>().ReverseMap();
+            CreateMap<Domain.Entities.Product, ProductDTO>().ReverseMap();
+            CreateMap<IEnumerable<Domain.Entities.Product>, IEnumerable<ProductDTO>>().ReverseMap();
         }
     }
 }
